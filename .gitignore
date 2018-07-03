@@ -16,6 +16,10 @@
 *.iws
 *.iml
 *.ipr
+*.log
+
+mvnw
+mvnw.cmd
 
 ### NetBeans ###
 /nbproject/private/
@@ -24,3 +28,4 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+elastic.iml
