@@ -25,6 +25,7 @@
 	</properties>
 
 	<distributionManagement>
+
 		<repository>
 			<uniqueVersion>false</uniqueVersion>
 			<id>dev</id>
@@ -32,9 +33,23 @@
 			<url>file://${user.home}/.m2/repository</url>
 			<layout>default</layout>
 		</repository>
+		<!--<repository>-->
+			<!--<id>elastic-lucene-snapshots</id>-->
+			<!--<name>Elastic Lucene Snapshots</name>-->
+			<!--<url>http://s3.amazonaws.com/download.elasticsearch.org/lucenesnapshots/00142c9</url>-->
+			<!--<releases><enabled>true</enabled></releases>-->
+			<!--<snapshots><enabled>false</enabled></snapshots>-->
+		<!--</repository>-->
 	</distributionManagement>
 
+
+
 	<dependencies>
+		<!--<dependency>-->
+			<!--<groupId>org.elasticsearch.client</groupId>-->
+			<!--<artifactId>elasticsearch-rest-high-level-client</artifactId>-->
+			<!--<version>7.0.0-alpha1</version>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>

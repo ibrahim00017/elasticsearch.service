@@ -34,14 +34,23 @@ public class ElasticClient {
     RestClientBuilder builder;
     RestTemplate restTemplate;
     HttpComponentsClientHttpRequestFactory factory;
+    private String HOST="elasticsearch";
+    private int port = 9200;
+    private int port2 =9201;
+
+//    public ElasticClient(String host,int port){
+//        this.HOST = host;
+//        this.port = port;
+//    }
+
 
    // @PostConstruct
     public  ElasticClient(){
         restClient = RestClient.builder(
-                new HttpHost("localhost", 9200, "http"),
-                new HttpHost("localhost", 9201, "http")).build();
+                new HttpHost(HOST, this.port, "http"),
+                new HttpHost(HOST, this.port, "http")).build();
 
-        builder = RestClient.builder(new HttpHost("localhost", 9200))
+        builder = RestClient.builder(new HttpHost(HOST, this.port))
                 .setRequestConfigCallback(new RestClientBuilder.RequestConfigCallback() {
                     @Override
                     public RequestConfig.Builder customizeRequestConfig(RequestConfig.Builder requestConfigBuilder) {
@@ -71,7 +80,33 @@ public class ElasticClient {
 
 
     public String construireURI(String index,String type) {
-    return "http://localhost:9200/"+index+"/"+type;
+    return "http://"+HOST+":"+this.port+"/"+index+"/"+type;
+    }
+
+    public String construiredockerURI(String index,String type) {
+        return "http://elasticsearch:9200/"+index+"/"+type;
+    }
+
+    public SearchCreateOutput creerIndexObjectNative(String index, String type, Object object,String id) throws Exception{
+        String uri = construireURI( index,type )+"/"+id;
+        String requestBody = GsonUtils.toJSONWithoutClassName(object);
+        MultiValueMap<String, Object> headers = new LinkedMultiValueMap<String, Object>();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        HttpEntity<String> request = new HttpEntity(requestBody, headers);
+        ResponseEntity<String> apiResponse = restTemplate.exchange(uri, HttpMethod.PUT,request,String.class);
+        SearchCreateOutput result = GsonUtils.getObjectFromJson(apiResponse.getBody(), SearchCreateOutput.class);
+        return result;
+    }
+
+    public SearchCreateOutput creerIndexObjectNativeTodocker(String index, String type, Object object,String id) throws Exception{
+        String uri = construiredockerURI( index,type )+"/"+id;
+        String requestBody = GsonUtils.toJSONWithoutClassName(object);
+        MultiValueMap<String, Object> headers = new LinkedMultiValueMap<String, Object>();
+        headers.add("Content-Type", "application/json;charset=UTF-8");
+        HttpEntity<String> request = new HttpEntity(requestBody, headers);
+        ResponseEntity<String> apiResponse = restTemplate.exchange(uri, HttpMethod.PUT,request,String.class);
+        SearchCreateOutput result = GsonUtils.getObjectFromJson(apiResponse.getBody(), SearchCreateOutput.class);
+        return result;
     }
 
     public SearchCreateOutput creerIndexObjectNative(String index, String type, Object object,int id) throws Exception{
@@ -101,7 +136,7 @@ public class ElasticClient {
 
     public List<Object> getAllObject(String index) throws Exception{
         Map<String, String> params = Collections.singletonMap("pretty", "true");
-        Response response = restClient.performRequest("GET", "/"+index+"/_search",params);
+        Response response = restClient.performRequest("GET", "/"+index+"/_search");
         String responseBody = EntityUtils.toString(response.getEntity());
         ModelMapper modelMapper = new ModelMapper();
 //        ElasticSearchOutput elasticSearchOutput = modelMapper.map(responseBody,ElasticSearchOutput.class);
@@ -112,6 +147,14 @@ public class ElasticClient {
             retour.add(obj.get_source());
         }
         return retour;
+
+    }
+
+    public String getOneObject(String index,String type,String id) throws Exception{
+        Map<String, String> params = Collections.singletonMap("pretty", "true");
+        Response response = restClient.performRequest("GET", "/"+index+"/"+type+"/"+id+"/_source",params);
+        String responseBody = EntityUtils.toString(response.getEntity());
+        return responseBody;
     }
 
 }

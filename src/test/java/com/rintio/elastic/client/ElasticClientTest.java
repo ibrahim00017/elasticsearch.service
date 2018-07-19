@@ -24,6 +24,9 @@ public class ElasticClientTest {
     }
 
     @Test
-    public void getAllObject() {
+    public void getOneObject() throws Exception{
+        ElasticClient elasticClient = new ElasticClient();
+        String rest = elasticClient.getOneObject("stations","station","87128535397642451148");
+        System.out.println(rest);
     }
 }
