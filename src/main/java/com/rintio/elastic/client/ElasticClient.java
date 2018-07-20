@@ -34,7 +34,7 @@ public class ElasticClient {
     RestClientBuilder builder;
     RestTemplate restTemplate;
     HttpComponentsClientHttpRequestFactory factory;
-    private String HOST="elasticsearch";
+    private String HOST="elastic";
     private int port = 9200;
     private int port2 =9201;
 
@@ -84,7 +84,7 @@ public class ElasticClient {
     }
 
     public String construiredockerURI(String index,String type) {
-        return "http://elasticsearch:9200/"+index+"/"+type;
+        return "http://elastic:9200/"+index+"/"+type;
     }
 
     public SearchCreateOutput creerIndexObjectNative(String index, String type, Object object,String id) throws Exception{
