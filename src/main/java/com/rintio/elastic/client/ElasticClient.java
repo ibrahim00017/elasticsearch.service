@@ -49,16 +49,16 @@ public class ElasticClient {
         restClient = RestClient.builder(
                 new HttpHost(HOST, this.port, "http"),
                 new HttpHost(HOST, this.port, "http")).build();
-
-        builder = RestClient.builder(new HttpHost(HOST, this.port))
-                .setRequestConfigCallback(new RestClientBuilder.RequestConfigCallback() {
-                    @Override
-                    public RequestConfig.Builder customizeRequestConfig(RequestConfig.Builder requestConfigBuilder) {
-                        return requestConfigBuilder.setConnectTimeout(120000)
-                                .setSocketTimeout(120000);
-                    }
-                })
-                .setMaxRetryTimeoutMillis(120000);
+//
+//        builder = RestClient.builder(new HttpHost(HOST, this.port))
+//                .setRequestConfigCallback(new RestClientBuilder.RequestConfigCallback() {
+//                    @Override
+//                    public RequestConfig.Builder customizeRequestConfig(RequestConfig.Builder requestConfigBuilder) {
+//                        return requestConfigBuilder.setConnectTimeout(120000)
+//                                .setSocketTimeout(120000);
+//                    }
+//                })
+//                .setMaxRetryTimeoutMillis(120000);
         factory = new HttpComponentsClientHttpRequestFactory();
         restTemplate = new RestTemplate(factory);
 
