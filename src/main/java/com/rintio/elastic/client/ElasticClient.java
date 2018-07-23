@@ -54,7 +54,7 @@ public class ElasticClient {
                 .setRequestConfigCallback(new RestClientBuilder.RequestConfigCallback() {
                     @Override
                     public RequestConfig.Builder customizeRequestConfig(RequestConfig.Builder requestConfigBuilder) {
-                        return requestConfigBuilder.setConnectTimeout(20000)
+                        return requestConfigBuilder.setConnectTimeout(120000)
                                 .setSocketTimeout(120000);
                     }
                 })
