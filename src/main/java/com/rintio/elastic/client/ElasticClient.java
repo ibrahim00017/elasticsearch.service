@@ -34,8 +34,8 @@ public class ElasticClient {
     RestClientBuilder builder;
     RestTemplate restTemplate;
     HttpComponentsClientHttpRequestFactory factory;
-    private String HOST="5.135.129.180";
-    private int port = 9200;
+    private String HOST="elastic";
+    private int port = 9201;
     private int port2 =9201;
 
 //    public ElasticClient(String host,int port){
@@ -84,7 +84,7 @@ public class ElasticClient {
     }
 
     public String construiredockerURI(String index,String type) {
-        return "http://5.135.129.180:9200/"+index+"/"+type;
+        return "http://elastic:9201/"+index+"/"+type;
     }
 
     public SearchCreateOutput creerIndexObjectNative(String index, String type, Object object,String id) throws Exception{
