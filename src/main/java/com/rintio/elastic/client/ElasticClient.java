@@ -34,7 +34,7 @@ public class ElasticClient {
     RestClientBuilder builder;
     RestTemplate restTemplate;
     HttpComponentsClientHttpRequestFactory factory;
-    private String HOST="elastic";
+    private String HOST="http://elastic";
     private int port = 9201;
     private int port2 =9201;
 
