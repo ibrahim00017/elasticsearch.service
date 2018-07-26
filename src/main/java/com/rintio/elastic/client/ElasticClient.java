@@ -135,8 +135,8 @@ public class ElasticClient {
 //    }
 
     public List<Object> getAllObject(String index) throws Exception{
-        Map<String, String> params = Collections.singletonMap("pretty", "true");
-        Response response = restClient.performRequest("GET", "/"+index+"/_search");
+        Map<String, String> params = Collections.singletonMap("size", "10000");
+        Response response = restClient.performRequest("GET", "/"+index+"/_search",params);
         String responseBody = EntityUtils.toString(response.getEntity());
         ModelMapper modelMapper = new ModelMapper();
 //        ElasticSearchOutput elasticSearchOutput = modelMapper.map(responseBody,ElasticSearchOutput.class);
